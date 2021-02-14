@@ -1,0 +1,40 @@
+<ng-template #content let-modal> 
+	<div class="modal-header"> 
+		<h4 class="modal-title"
+			id="modal-basic-title"> 
+			User support
+		</h4> 
+		<button type="button" class="close"
+				aria-label="Close" (click)= 
+				"modal.dismiss('Cross click')"> 
+
+			<span aria-hidden="true"> 
+				× 
+			</span> 
+		</button> 
+	</div> 
+	<div class="modal-body"> 
+		<form> 
+			<div class="form-group"> 
+				<label for="dateOfBirth"> 
+					User ABC requires support. Please Press okey to continue
+				</label> 
+	\
+			</div> 
+		</form> 
+	</div> 
+	<div class="modal-footer"> 
+		<button type="button"
+			class="btn btn-outline-dark"
+			(click)="modal.close('Save click')"> 
+			Okey 
+		</button> 
+
+		<button type="button"
+			class="btn btn-outline-dark"
+			(click)="modal.close('cancel click')"> 
+			Cancel 
+		</button> 
+	</div> 
+</ng-template> 
+
