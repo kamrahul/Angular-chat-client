@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatBubble } from '../chat-bubble';
+import { SocketService } from '../service/socket.service';
 
 
 @Component({
@@ -13,7 +14,7 @@ export class ChatBotComponent implements OnInit {
   message_stack :Array<ChatBubble> =[]
  
   
-  constructor(
+  constructor( private _socketService: SocketService
 
   ) { 
 
@@ -22,6 +23,17 @@ export class ChatBotComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this._socketService.socket.on('my_response', (data: any) => {
+      console.log("DAta received",data.data);
+      //alert(data)
+      //this.data = data;
+      let chatMessage = new  ChatBubble(data.data,"chat-bubble me");
+      this.message_stack.push(chatMessage);
+      
+    });
+
+  
   }
 
   submitQuery():void{
@@ -30,6 +42,8 @@ export class ChatBotComponent implements OnInit {
     console.log(this.chatText)
     let chatMessage = new  ChatBubble(this.chatText,"chat-bubble you");
     this.message_stack.push(chatMessage);
+    this._socketService.socket.emit('my_event', {data: 'connected to the SocketServer...'});
+    this._socketService.socket.emit('my_broadcast_event', {data: 'Broadcast message SocketServer...'});
 
     //clearing the chat box
     this.chatText = '';

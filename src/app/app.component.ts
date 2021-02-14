@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { SocketService } from './service/socket.service';
 //import * as io from 'socket.io-client';
-import {io} from 'socket.io-client/build/index';
+//import {io} from 'socket.io-client/build/index';
+declare var io: any ;
 
 
 @Component({
@@ -12,20 +14,22 @@ export class AppComponent implements OnInit {
   private socket: any;
   public data: any;
 
-constructor(){
-// Connect Socket with server URL
-//this.socket = io('http://127.0.0.1:8000/test');
+constructor(private _socketService : SocketService){
+
 
 }
 
 public ngOnInit(): void {
+  
  
-  // this.socket.on('my_response', (data: any) => {
-  //   console.log("DAta received");
-  //   alert(data)
-  //   this.data = data;
-  //   console.log(data);
-  // });
+  
+
+
+  this._socketService.socket.on('connect', (data: any) => {
+
+  
+    this._socketService.socket.emit('my_event', {data: 'connected to the SocketServer...'});
+});
 }
 
   title = 'Angular-chat-client';
